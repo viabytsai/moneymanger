@@ -22,6 +22,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "~@/assets/style/helper.scss";
 //只要加上scoped 样式只会在本vue中生效
 nav{
   display: flex;
@@ -41,7 +42,7 @@ nav{
     width: 32px;
   }
   >.item.selected{
-    color: #fe1f1f;
+    color: $color-highlight;
   }
 }
 </style>
