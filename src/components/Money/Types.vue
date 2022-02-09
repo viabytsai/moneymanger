@@ -13,7 +13,6 @@
 <script lang='ts'>
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-
 @Component
 export default class Types extends Vue {
   type = '-'; //'-'表示支出 '+'表示收入
@@ -23,7 +22,6 @@ export default class Types extends Vue {
     }
     this.type = type;
   }
-
 }
 </script>
 
