@@ -1,6 +1,6 @@
 <template>
   <Layout class-prefix="layout">
-    <NumberPad :value.sync="record.amount"/>
+    <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
 <!--    :value="record.type" @update:value="onUpdateType 删onUpdateType函数简写成sync-->
     <Types :value.sync="record.type"/>
     <Notes @update:value="onUpdateNotes"/>
@@ -16,13 +16,15 @@ import Types from '@/components/Money/Types.vue';
 import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Watch} from 'vue-property-decorator';
 
+const recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]');
 type Record = {
   tags: string[]
   notes: string
   type: string
   amount: number
+  createdAt?:Date //除了数据类型外还可以写类
 }
 @Component({
       components: {Tags, Notes, Types, NumberPad}
@@ -30,6 +32,7 @@ type Record = {
 )
 export default class Money extends Vue {
   tags = ['衣', '食', '住', '行', '玩'];
+  recordList:Record[] = recordList;
   record: Record = {
     tags: [],
     notes: '',
@@ -49,8 +52,18 @@ export default class Money extends Vue {
   //   this.record.type =value;
   // }
 
-  onUpdateAmount(value: string) {
-    this.record.amount =parseFloat(value);
+  // onUpdateAmount(value: string) {
+  //   this.record.amount =parseFloat(value);
+  // }
+  saveRecord(){
+    const record2:Record = JSON.parse(JSON.stringify((this.record)))
+    //深拷贝，每一次保存都创建一个新的record副本，不然保存的都是同一个record
+    record2.createdAt = new Date();
+    this.recordList.push(record2)
+  }
+  @Watch('recordList')
+  onRecordListChange(){
+    window.localStorage.setItem('recordList',JSON.stringify((this.recordList)))
   }
 }
 </script>
