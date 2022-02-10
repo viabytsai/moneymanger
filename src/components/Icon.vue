@@ -15,7 +15,7 @@ try {
 }
 export default {
   name: 'Icon',
-  props:['name']
+  props:['name'] //外部接收一个名字
 };
 </script>
 

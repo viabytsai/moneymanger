@@ -19,15 +19,18 @@ import Tags from '@/components/Money/Tags.vue';
 import Vue from 'vue';
 import {Component, Watch} from 'vue-property-decorator';
 
-import model from '@/model';
-const recordList= model.fetch(); //从本地拿到的数据
+import recordListModel from '@/models/recordListModel';
+import tagListModel from '@/models/tagListModel';
+
+const recordList= recordListModel.fetch(); //从本地拿到的数据
+const tagList = tagListModel.fetch();
 
 @Component({
       components: {Tags, Notes, Types, NumberPad}
     }
 )
 export default class Money extends Vue {
-  tags = ['衣', '食', '住', '行', '玩'];
+  tags = tagList;
   recordList:RecordItem[] = recordList; //从本地数据库拿到数据赋值给中间数据
   record: RecordItem = {
     tags: [],
@@ -44,14 +47,14 @@ export default class Money extends Vue {
     this.record.notes =value;
   }
   saveRecord(){
-    const record2:RecordItem = model.clone(this.record);
+    const record2:RecordItem = recordListModel.clone(this.record);
     //深拷贝，每一次保存都创建一个新的record副本，不然保存的都是同一个record
     record2.createdAt = new Date();
     this.recordList.push(record2)
   }
   @Watch('recordList')
   onRecordListChange(){
-  model.save(this.recordList) //将修改后的中间数据上传给本地数据库
+  recordListModel.save(this.recordList) //将修改后的中间数据上传给本地数据库
   }
 }
 </script>
