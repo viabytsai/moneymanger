@@ -7,6 +7,7 @@
     <!--    监听dataSource事件，把外部的tag传入dataSource-->
     <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
     {{record}}
+    {{recordList}}
   </Layout>
 </template>
 
@@ -18,22 +19,17 @@ import Tags from '@/components/Money/Tags.vue';
 import Vue from 'vue';
 import {Component, Watch} from 'vue-property-decorator';
 
-const recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]');
-type Record = {
-  tags: string[]
-  notes: string
-  type: string
-  amount: number
-  createdAt?:Date //除了数据类型外还可以写类
-}
+import model from '@/model';
+const recordList= model.fetch(); //从本地拿到的数据
+
 @Component({
       components: {Tags, Notes, Types, NumberPad}
     }
 )
 export default class Money extends Vue {
   tags = ['衣', '食', '住', '行', '玩'];
-  recordList:Record[] = recordList;
-  record: Record = {
+  recordList:RecordItem[] = recordList; //从本地数据库拿到数据赋值给中间数据
+  record: RecordItem = {
     tags: [],
     notes: '',
     type: '',
@@ -47,23 +43,15 @@ export default class Money extends Vue {
   onUpdateNotes(value: string) {
     this.record.notes =value;
   }
-
-  // onUpdateType(value: string) {
-  //   this.record.type =value;
-  // }
-
-  // onUpdateAmount(value: string) {
-  //   this.record.amount =parseFloat(value);
-  // }
   saveRecord(){
-    const record2:Record = JSON.parse(JSON.stringify((this.record)))
+    const record2:RecordItem = model.clone(this.record);
     //深拷贝，每一次保存都创建一个新的record副本，不然保存的都是同一个record
     record2.createdAt = new Date();
     this.recordList.push(record2)
   }
   @Watch('recordList')
   onRecordListChange(){
-    window.localStorage.setItem('recordList',JSON.stringify((this.recordList)))
+  model.save(this.recordList) //将修改后的中间数据上传给本地数据库
   }
 }
 </script>
