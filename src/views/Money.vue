@@ -8,8 +8,6 @@
     </div>
     <!--    监听dataSource事件，把外部的tag传入dataSource-->
     <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
-    {{record}}
-    {{recordList}}
   </Layout>
 </template>
 
@@ -49,10 +47,7 @@ export default class Money extends Vue {
     this.record.notes =value;
   }
   saveRecord(){
-    const record2:RecordItem = recordListModel.clone(this.record);
-    //深拷贝，每一次保存都创建一个新的record副本，不然保存的都是同一个record
-    record2.createdAt = new Date();
-    this.recordList.push(record2)
+    recordListModel.create(this.record)
   }
   @Watch('recordList')
   onRecordListChange(){
