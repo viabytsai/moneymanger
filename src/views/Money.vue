@@ -3,7 +3,7 @@
     <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
 <!--    :value="record.type" @update:value="onUpdateType 删onUpdateType函数简写成sync-->
     <Types :value.sync="record.type"/>
-    <Notes @update:value="onUpdateNotes"/>
+    <Notes @update:value="onUpdateNotes" field-name="备注" placeholder="在这里输入备注"/>
     <!--    监听dataSource事件，把外部的tag传入dataSource-->
     <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
     {{record}}
