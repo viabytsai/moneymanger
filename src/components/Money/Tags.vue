@@ -5,9 +5,9 @@
     </div>
     <ul class="current">
 <!--      外部tags传入到内部的dataSource中，v-for遍历每一个tag，渲染到页面中；如果选中的tag包含了当前的tag，就给它加上selected-->
-     <li v-for="tag in dataSource" :key="tag"
+     <li v-for="tag in dataSource" :key="tag.id"
          :class="{selected:selectedTags.indexOf(tag)>=0}"
-         @click="toggle(tag)">{{tag}}</li>
+         @click="toggle(tag)">{{tag.name}}</li>
     </ul>
   </div>
 </template>
