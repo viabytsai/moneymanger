@@ -3,7 +3,9 @@
     <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
 <!--    :value="record.type" @update:value="onUpdateType 删onUpdateType函数简写成sync-->
     <Types :value.sync="record.type"/>
-    <Notes @update:value="onUpdateNotes" field-name="备注" placeholder="在这里输入备注"/>
+    <div class="notes">
+      <FormItem @update:value="onUpdateNotes" field-name="备注" placeholder="在这里输入备注"/>
+    </div>
     <!--    监听dataSource事件，把外部的tag传入dataSource-->
     <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
     {{record}}
@@ -14,7 +16,7 @@
 <script lang="ts">
 import NumberPad from '@/components/Money/NumberPad.vue';
 import Types from '@/components/Money/Types.vue';
-import Notes from '@/components/Money/Notes.vue';
+import FormItem from '@/components/Money/FormItem.vue';
 import Tags from '@/components/Money/Tags.vue';
 import Vue from 'vue';
 import {Component, Watch} from 'vue-property-decorator';
@@ -26,7 +28,7 @@ const recordList= recordListModel.fetch(); //从本地拿到的数据
 const tagList = tagListModel.fetch();
 
 @Component({
-      components: {Tags, Notes, Types, NumberPad}
+      components: {Tags, FormItem, Types, NumberPad}
     }
 )
 export default class Money extends Vue {
@@ -64,7 +66,8 @@ export default class Money extends Vue {
   display: flex;
   flex-direction: column-reverse; //相应的html布局要倒过来
 }
+.notes{
+  padding: 12px 0;
+}
 </style>
 
-<style lang='scss' scoped>
-</style>
