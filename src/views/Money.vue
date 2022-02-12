@@ -18,6 +18,7 @@ import FormItem from '@/components/Money/FormItem.vue';
 import Tags from '@/components/Money/Tags.vue';
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
+import store from '@/store/index2';
 
 
 //从本地拿到的数据
@@ -27,15 +28,14 @@ import {Component} from 'vue-property-decorator';
     }
 )
 export default class Money extends Vue {
-  tags = window.tagList;
-  recordList= window.recordList; //从本地数据库拿到数据赋值给中间数据
+  tags = store.tagList;
+  recordList= store.recordList; //从本地数据库拿到数据赋值给中间数据
   record: RecordItem = {
     tags: [],
     notes: '',
-    type: '',
+    type: '-',
     amount: 0
   };
-
   onUpdateTags(value: string[]) {
     this.record.tags =value;
   }
@@ -44,7 +44,7 @@ export default class Money extends Vue {
     this.record.notes =value;
   }
   saveRecord(){
-    window.createRecord(this.record)
+    store.createRecord(this.record)
   }
 }
 </script>
