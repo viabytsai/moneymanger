@@ -17,12 +17,10 @@ import Types from '@/components/Money/Types.vue';
 import FormItem from '@/components/Money/FormItem.vue';
 import Tags from '@/components/Money/Tags.vue';
 import Vue from 'vue';
-import {Component, Watch} from 'vue-property-decorator';
+import {Component} from 'vue-property-decorator';
 
-import recordListModel from '@/models/recordListModel';
-import tagListModel from '@/models/tagListModel';
 
-const recordList= recordListModel.fetch(); //从本地拿到的数据
+//从本地拿到的数据
 
 @Component({
       components: {Tags, FormItem, Types, NumberPad}
@@ -30,7 +28,7 @@ const recordList= recordListModel.fetch(); //从本地拿到的数据
 )
 export default class Money extends Vue {
   tags = window.tagList;
-  recordList:RecordItem[] = recordList; //从本地数据库拿到数据赋值给中间数据
+  recordList= window.recordList; //从本地数据库拿到数据赋值给中间数据
   record: RecordItem = {
     tags: [],
     notes: '',
@@ -46,11 +44,7 @@ export default class Money extends Vue {
     this.record.notes =value;
   }
   saveRecord(){
-    recordListModel.create(this.record)
-  }
-  @Watch('recordList')
-  onRecordListChange(){
-  recordListModel.save(this.recordList) //将修改后的中间数据上传给本地数据库
+    window.createRecord(this.record)
   }
 }
 </script>
