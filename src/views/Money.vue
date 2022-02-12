@@ -23,14 +23,13 @@ import recordListModel from '@/models/recordListModel';
 import tagListModel from '@/models/tagListModel';
 
 const recordList= recordListModel.fetch(); //从本地拿到的数据
-const tagList = tagListModel.fetch();
 
 @Component({
       components: {Tags, FormItem, Types, NumberPad}
     }
 )
 export default class Money extends Vue {
-  tags = tagList;
+  tags = window.tagList;
   recordList:RecordItem[] = recordList; //从本地数据库拿到数据赋值给中间数据
   record: RecordItem = {
     tags: [],
