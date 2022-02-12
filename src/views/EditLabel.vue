@@ -27,11 +27,10 @@ import TagListModel from '@/models/tagListModel';
 })
 export default class EditLabel extends Vue {
   tag?:{id:string,name:string}=undefined
+
   created() {
-    const id = this.$route.params.id;//当前访问页面的id
-    tagListModel.fetch();
-    const tags = tagListModel.data;
-    const tag = tags.filter(t => t.id === id)[0];//获取tags中和当前id相同id
+    // const id = this.$route.params.id;路由获取当前访问页面的id
+    const tag = window.findTag(this.$route.params.id);//获取tags中和当前id相同id
     if (tag) {
       this.tag = tag
     } else {
@@ -40,12 +39,12 @@ export default class EditLabel extends Vue {
   }
   updateTag(name:string){
     if(this.tag) {
-      TagListModel.update(this.tag.id, name)
+      window.updateTag(this.tag.id, name)
     }
   }
   remove(){
     if(this.tag){
-      if(tagListModel.remove(this.tag.id)){
+      if(window.removeTag(this.tag.id)){
         this.$router.back()
       }else {window.alert('删除失败')}
     }

@@ -1,30 +1,43 @@
-import Vue from 'vue'
-import App from './App.vue'
-import './registerServiceWorker'
-import router from './router'
-import store from './store'
+import Vue from 'vue';
+import App from './App.vue';
+import './registerServiceWorker';
+import router from './router';
+import store from './store';
 import Nav from '@/components/Nav.vue';
 import Layout from '@/components/Layout.vue';
 import Icon from '@/components/Icon.vue';
 import tagListModel from '@/models/tagListModel';
+import TagListModel from '@/models/tagListModel';
 
-Vue.config.productionTip = false
-Vue.component('Nav',Nav);
-Vue.component('Layout',Layout);
-Vue.component('Icon',Icon)
+Vue.config.productionTip = false;
+Vue.component('Nav', Nav);
+Vue.component('Layout', Layout);
+Vue.component('Icon', Icon);
 
-window.tagList = tagListModel.fetch()
-
-window.createTag = (name:string) =>{
-  const message = tagListModel.create(name);
-  if(name){
-    if(message === 'duplicated'){window.alert('标签名重复')}
-    else if(message==='success'){window.alert('成功')}
-  }
+window.tagList = tagListModel.fetch();
+window.findTag=(id:string)=>{
+    return  window.tagList.filter(t => t.id === id)[0];//获取tags中和当前id相同id
 }
+window.createTag = (name: string) => {
+    const message = tagListModel.create(name);
+    if (name) {
+        if (message === 'duplicated') {
+            window.alert('标签名重复');
+        } else if (message === 'success') {
+            window.alert('成功');
+        }
+    }
+};
 
+window.removeTag = (id: string) => {
+    return tagListModel.remove(id);
+};
+
+window.updateTag=(id:string,name:string)=>{
+    return TagListModel.update(id, name)
+}
 new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+    router,
+    store,
+    render: h => h(App)
+}).$mount('#app');
