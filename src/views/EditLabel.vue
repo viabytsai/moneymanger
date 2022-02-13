@@ -22,13 +22,15 @@ import Button from '@/components/Button.vue';
 import store from '@/store/index2';
 
 @Component({
-  components: {Button, FormItem}
+  components: {Button, FormItem},
 })
 export default class EditLabel extends Vue {
-  tag?:Tag = undefined
+  get tag(){
+    return this.$store.state.currentTag;
+  }
   created() {
-    // const id = this.$route.params.id;路由获取当前访问页面的id
-    this.tag = store.findTag(this.$route.params.id);//获取tags中和当前id相同id
+    const id = this.$route.params.id// 路由获取当前访问页面的id
+    this.$store.commit('setCurrentTag',id);
     if (!this.tag) {
       this.$router.replace('/404');
     }

@@ -19,15 +19,21 @@ import Button from '@/components/Button.vue';
 import store from '@/store/index2';
 
 @Component({
-  components: {Button}
+  components: {Button},
 })
 export default class Labels extends Vue{
-  tags =store.tagList; //tags是一个对象数组
+  get tag(){
+    return this.$store.state.currentTag;
+  }
+  beforeCreate(){
+    this.$store.commit('fetchTags');
+  }
   creatTag(){
     const name = window.prompt('请输入标签名');
-    if(name){
-      store.createTag(name);
+    if (!name) {
+      return window.alert('标签名不能为空');
     }
+    this.$store.commit('createTag', name);
   }
 }
 </script>
