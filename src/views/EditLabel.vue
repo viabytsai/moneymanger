@@ -30,6 +30,7 @@ export default class EditLabel extends Vue {
   }
   created() {
     const id = this.$route.params.id// 路由获取当前访问页面的id
+    this.$store.commit('fetchTags');
     this.$store.commit('setCurrentTag',id);
     if (!this.tag) {
       this.$router.replace('/404');
@@ -41,11 +42,9 @@ export default class EditLabel extends Vue {
     }
   }
   remove(){
-    // if(this.tag){
-    //   if(store.removeTag(this.tag.id)){
-    //     this.$router.back()
-    //   }else {window.alert('删除失败')}
-    // }
+    if(this.tag){
+      this.$store.commit('removeTag', this.tag.id)
+    }
   }
   goBack(){
     this.$router.back()
