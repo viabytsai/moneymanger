@@ -2,13 +2,13 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import clone from '@/lib/clone';
 import CreatorID from '@/lib/idCreator';
-import Types from '@/components/Money/Types.vue';
+import router from '@/router';
 
 Vue.use(Vuex);
 type RootState = {
     recordList: RecordItem[],
     tagList: Tag[],
-    currentTag?: Tag
+    currentTag?:Tag
 }
 const store = new Vuex.Store({
     state: {
@@ -60,15 +60,20 @@ const store = new Vuex.Store({
         },
         removeTag(state, id) {
             let index = -1;
-            for (let i = 0; i < this.tagList.length; i++) {
+            for (let i = 0; i < state.tagList.length; i++) {
                 if (state.tagList[i].id === id) {
                     index = i;
                     break;
                 }
             }
-            state.tagList.splice(index, 1);
-            store.commit('saveTag');
-            return true;
+            if(index>=0){
+                state.tagList.splice(index, 1);
+                store.commit('saveTags');
+                router.back();
+            }else {
+                window.alert('删除失败')
+            }
+
         },
         updateTag(state,payload: { id: string, name: string }){
             const {id, name} = payload;
@@ -76,6 +81,7 @@ const store = new Vuex.Store({
             if (idList.indexOf(id) >= 0) {
                 const names = state.tagList.map(item => item.name);
                 if (names.indexOf(name) >= 0) {
+                    window.alert('标签名重复');
                     return 'duplicated';
                 } else {
                     const tag = state.tagList.filter(item => item.id === id)[0];
