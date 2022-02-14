@@ -17,11 +17,7 @@ import FormItem from '@/components/Money/FormItem.vue';
 import Tags from '@/components/Money/Tags.vue';
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-
-
-
 //从本地拿到的数据
-
 @Component({
   components: {Tags, FormItem, Types, NumberPad},
 })
