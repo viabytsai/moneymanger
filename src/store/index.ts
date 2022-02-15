@@ -45,13 +45,11 @@ const store = new Vuex.Store({
             const names = state.tagList.map(item => item.name); //将data数组中的每一项的name收集起来成一个新的数组
             if (names.indexOf(name) >= 0) {
                 window.alert('标签名重复');
-                return 'duplicated';
             }
             const id = CreatorID().toString();
             state.tagList.push({id: id, name: name});
             store.commit('saveTags');
             window.alert('成功');
-            return 'success';
         },
         removeTag(state, id) {
             let index = -1;

@@ -2,11 +2,16 @@
   <Layout class-prefix="layout">
     <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
     <!--    :value="record.type" @update:value="onUpdateType 删onUpdateType函数简写成sync-->
-    <Types :value.sync="record.type"/>
+
     <div class="notes">
-      <FormItem @update:value="onUpdateNotes" field-name="备注" placeholder="在这里输入备注"/>
+      <FormItem
+          :value="record.notes"
+          @update:value="onUpdateNotes"
+          field-name="备注"
+          placeholder="在这里输入备注"/>
     </div>
-    <Tags/>
+    <Tags @update:value="record.tags = $event"/>
+    <Types :value.sync="record.type"/>
   </Layout>
 </template>
 
@@ -29,12 +34,13 @@ export default class Money extends Vue {
     type: '-',
     amount: 0
   };
+
   get recordList() {
     return this.$store.state.recordList;
   }
 
-  created(){
-    this.$store.commit('fetchRecords')
+  created() {
+    this.$store.commit('fetchRecords');
   }
 
   onUpdateNotes(value: string) {
@@ -42,7 +48,11 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    this.$store.commit('createRecord',this.record);
+    if (!this.record.tags || this.record.tags.length === 0) {
+      return window.alert('请至少选择一个标签');
+    }
+    this.$store.commit('createRecord', this.record);
+    this.record.notes = '';
   }
 }
 </script>

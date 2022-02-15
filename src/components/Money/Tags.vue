@@ -4,7 +4,6 @@
       <button @click="create">新增标签</button>
     </div>
     <ul class="current">
-      <!--      外部tags传入到内部的dataSource中，v-for遍历每一个tag，渲染到页面中；如果选中的tag包含了当前的tag，就给它加上selected-->
       <li v-for="tag in tagList" :key="tag.id"
           :class="{selected:selectedTags.indexOf(tag)>=0}"
           @click="toggle(tag)">{{ tag.name }}
@@ -36,7 +35,6 @@ export default class Tags extends Vue {
     } else {
       this.selectedTags.push(tag);
     }
-
     this.$emit('update:value', this.selectedTags);
   }
 
