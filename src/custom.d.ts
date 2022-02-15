@@ -1,3 +1,9 @@
+type RootState = {
+    recordList: RecordItem[],
+    tagList: Tag[],
+    currentTag?:Tag
+}
+
 type Tag = {
     id: string
     name: string
@@ -12,10 +18,10 @@ type TagListModel = {
 }
 
 type RecordItem = {
-    tags: string[]
+    tags: Tag[]
     notes: string
     type: string
     amount: number
-    createdAt?:Date //除了数据类型外还可以写类
+    createdAt?:string //除了数据类型外还可以写类
 }
 
