@@ -6,11 +6,11 @@
     </router-link>
     <router-link to="/Labels" class="item" active-class="selected">
       <Icon name="label"></Icon>
-      标签
+      标签编辑
     </router-link>
     <router-link to="/Statistics" class="item" active-class="selected">
       <Icon name="statistics"></Icon>
-      统计
+      明细
     </router-link>
   </nav>
 </template>

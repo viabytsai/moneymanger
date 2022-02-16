@@ -2,10 +2,11 @@
   <div>
     <ul class="types">
       <li :class="{selected: value==='-',[classPrefix+'-item']: classPrefix}"
-          @click="selectType('-')">支出
+          @click="selectType('-')"><span>支出</span>
       </li>
       <li :class="{selected: value==='+',[classPrefix+'-item']: classPrefix}"
-          @click="selectType('+')">收入</li>
+          @click="selectType('+')"><span>收入</span>
+      </li>
     </ul>
   </div>
 </template>
@@ -30,27 +31,24 @@ export default class Types extends Vue {
 @import "~@/assets/style/helper.scss";
 
 .types {
-  background: #c4c4c4;
+  background: #f0eff4;
   display: flex;
   text-align: center;
   font-size: 24px;
+  justify-content: center;
 
   > li {
-    width: 50%;
+    width: 20%;
     height: 64px;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
 
-    &.selected::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 4px;
-      width: 100%;
-      background: black;
+    &.selected{
+     > span{
+       border-bottom: 3px solid black;
+     }
     }
   }
 }

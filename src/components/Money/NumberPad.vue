@@ -13,7 +13,7 @@
       <button @click="inputContent">7</button>
       <button @click="inputContent">8</button>
       <button @click="inputContent">9</button>
-      <button @click="ok" class="ok">OK</button>
+      <button @click="ok" class="ok">完成</button>
       <button @click="inputContent" class="zero">0</button>
       <button @click="inputContent">.</button>
     </div>
@@ -66,8 +66,6 @@ export default class NumberPad extends Vue {
     this.output='0';
   }
 }
-
-
 </script>
 
 <style lang='scss' scoped>
@@ -81,58 +79,53 @@ export default class NumberPad extends Vue {
     padding: 9px 16px;
     text-align: right;
     min-height: 72px;
+    background-color: #f3f3f3;
   }
-
   .buttons {
-    @extend %clearFix;
-    //display: flex;
-    //flex-wrap: wrap;
-    // 用flex定位后 ok咱用两行会把最后一行挤下去
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    padding: 10px;
+    grid-column-gap: 20px;
+    grid-row-gap: 15px;
+    background-color: #f0eff4;
     > button {
-      width: 25%;
-      height: 64px;
-      float: left;
-      background: transparent;
-      border: none;
-
+      $bg: #e4edec;
+      font-size: 20px;
+      min-height: 64px;
+      background: #f3f3f3;
+      border:2px solid #979394;
+      border-radius: 10px;
       &.ok {
-        height: 64*2px;
-        float: right;
+        height: 100%;
+        grid-column: 4/5;
+        grid-row: 3/5;
       }
-
       &.zero {
-        width: 25*2%;
+        width: 100%;
+        grid-column: 1/3;
       }
-
-      $bg: #f2f2f2;
-
-      &:nth-child(1) {
-        background: $bg;
-      }
-
-      &:nth-child(2), &:nth-child(5) {
-        background: darken($bg, 4%);
-      }
-
-      &:nth-child(3), &:nth-child(6), &:nth-child(9) {
-        background: darken($bg, 4*2%);
-      }
-
-      &:nth-child(4), &:nth-child(7), &:nth-child(10) {
-        background: darken($bg, 4*3%);
-      }
-
-      &:nth-child(8), &:nth-child(11), &:nth-child(13) {
-        background: darken($bg, 4*4%);
-      }
-
-      &:nth-child(14) {
-        background: darken($bg, 4*5%);
-      }
-
-      &:nth-child(12) {
-        background: darken($bg, 4*6%);
-      }
+      //&:nth-child(1) {
+      //  background: $bg;
+      //}
+      //&:nth-child(2), &:nth-child(5) {
+      //  background: darken($bg, 4%);
+      //}
+      //&:nth-child(3), &:nth-child(6), &:nth-child(9) {
+      //  background: darken($bg, 4*2%);
+      //}
+      //&:nth-child(4), &:nth-child(7), &:nth-child(10) {
+      //  background: darken($bg, 4*3%);
+      //}
+      //&:nth-child(8), &:nth-child(11), &:nth-child(13) {
+      //  background: darken($bg, 4*4%);
+      //}
+      //&:nth-child(14) {
+      //  background: darken($bg, 4*5%);
+      //}
+      //&:nth-child(12) {
+      //  background: darken($bg, 4*6%);
+      //}
     }
   }
 }
